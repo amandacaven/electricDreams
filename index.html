@@ -1,21 +1,233 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Electric Dreams</title>
+	<title>AI | Amanda Caven</title>
 
 	<style type="text/css">
+        input[type="text"]{
+        min-width: 20%;
+        }
+        body{
+            margin-left: 2%;
+        }
+        button{
+            cursor: pointer;
+        }
 	/*style the computer text, input, and button*/
 	</style>
 </head>
 <body>
-<h1>Electric Dreams</h1>
-<p id = "computer">Hi, how are you today?</p>
-<input id = "human" type = "text" placeholder = "Type your response...">
+<h1>You're Probably Being Followed</h1>
+<p id = "computer">Hello...how are you doing?</p>
+<input id = "human" type = "text" placeholder = "Quietly type your response...">
 <button>Enter</button>
 
 <script type="text/javascript">
 //your script here
+//There are three common methods to gain access (control) of markup elements
+//We have used querySelector
 
+var computer = document.querySelector('#computer');
+//without modifying the markup finish the next 2 var statements	
+var human = document.getElementById('human');
+var button = document.getElementsByTagName('button')[0];
+
+//other vars we will use in the next step
+var responseNumber;//used to store the value of the response to display to the player
+var newResponse;//used to generate the next response and prevent duplication of responses
+var humanMsg = "";//will hold the text (value) of the player input
+var computerMsg = "";//will hold the computer text displayed to the player each turn
+
+//new//
+var questionTrack = "start";
+
+var genericResponses = [
+	"You're scaring me...",
+	"Did you hear that noise?",
+    "Maybe we should talk somewhere else."
+];//will be populated with messages to respond to the player
+
+//make the human input the focus when the page loads
+human.focus();
+
+button.addEventListener("click",clickHandler,false);
+
+function clickHandler(){
+	playGame();
+}
+
+window.addEventListener("keydown",keydownHandler,false);
+
+function keydownHandler(event){
+	if (event.keyCode===13) {
+		playGame();
+	}
+}
+
+function playGame() {
+	//let the games begin
+
+	// //version4
+	// humanMsg = (human.value).toLowerCase();
+	// if (humanMsg.indexOf("good") !== -1){
+	// 	computerMsg = "That is good for you.";
+	// }else if (humanMsg.indexOf("bad") !== -1){
+	// 	computerMsg = "You live a sad life.";
+	// }else {
+	// 	computerMsg = "You know nothing.";
+	// }
+	// computer.innerHTML = computerMsg;
+
+
+// //version5
+	//switch questionTrack (gameState type thing)
+	humanMsg = (human.value).toLowerCase();
+	switch (questionTrack) {
+		case "start":
+		firstAnalysis();
+		break;
+
+		case "music":
+		musicAnalysis();
+		break;
+
+		case "follow":
+		followAnalysis();
+		break;
+
+		case "color":
+		colorAnalysis();
+		break;
+
+		case "spy":
+		spyAnalysis();
+		break;
+            
+        case "sad":
+        sadAnalysis();
+        break;
+
+		default:
+		genericResponse();
+		break;
+
+	}
+	computer.innerHTML = computerMsg;
+	////////////////////////
+	//3. wipe the text in the player input field 
+	human.value = "";
+
+}
+function genericResponse(){
+		// //version3
+	if (genericResponses.length >0){
+		newResponse = Math.floor(Math.random()*genericResponses.length);
+		responseNumber = newResponse;
+		computerMsg = genericResponses[responseNumber];
+		genericResponses.splice(responseNumber,1);
+	} else {
+		computerMsg = "I should go.  They're watching us.";
+		human.className="displayNone";
+		button.className="displayNone";
+		setTimeout(endGame,2000);
+	}
+
+}
+function firstAnalysis(){
+	if (humanMsg.indexOf("good") !== -1){
+		computerMsg = "That's good... Did anyone follow you here?";
+		questionTrack = "music";
+	}else if (humanMsg.indexOf("bad") !== -1){
+		computerMsg = "Me too... Do you ever get the feeling that someone is following you?";
+		questionTrack = "follow";
+	}else {
+		genericResponse();
+	}
+
+}
+
+function musicAnalysis(){
+	if (humanMsg.indexOf("yes") !== -1){
+		computerMsg = "I knew it!  We'll have to talk about something insignificant... What's your favorite type of music?";
+		questionTrack = "sad";
+	}else if (humanMsg.indexOf("no") !== -1){
+		computerMsg = "Oh, thank goodness!  I was worried. I'd like to ask you some questions... What's your favorite color?";
+		questionTrack = "color";
+	}else {
+		genericResponse();
+	}
+}
+    
+    function followAnalysis(){
+	if (humanMsg.indexOf("yes") !== -1){
+		computerMsg = "That's because we're almost always being followed!  I think we're okay right now, though, so we should be able to talk.  What's your favorite color?";
+		questionTrack = "color";
+	}else if (humanMsg.indexOf("no") !== -1){
+		computerMsg = "How do you not?! They're often following me...  I think we're okay to talk right now, though. What's your favorite color?";
+		questionTrack = "color";
+	}else {
+		genericResponse();
+	}
+}
+    function sadAnalysis(){
+	if (humanMsg.indexOf("rock") !== -1){
+		computerMsg = "I think we'll get along just fine.  Wait, are you wearing a wire?";
+		questionTrack = "spy";
+	}else if (humanMsg.indexOf("country") !== -1){
+		computerMsg = "I thought only spies liked that kind of music... I hope you're not a spy.  Why are you even talking to me?";
+		questionTrack = "endingAnalysis";
+	}else if (humanMsg.indexOf("rap") !== -1){
+		computerMsg = "I thought only spies liked that kind of music... I hope you're not a spy.  Why are you even talking to me?";
+		questionTrack = "endingAnalysis";
+    }else {
+		genericResponse();
+	}
+}
+
+
+
+function colorAnalysis(){
+	if (humanMsg.indexOf("blue") !== -1){
+		computerMsg = "That's a nice, trustworthy color. But...people do lie.  Are you recording this conversation?";
+		questionTrack = "spy";
+	}else if (humanMsg.indexOf("red") !== -1){
+		computerMsg = "You're making me nervous.  That's a suspicious favorite color... are you a spy? ";
+		questionTrack = "spy";
+	}else {
+		genericResponse();
+	}
+}
+
+function spyAnalysis(){
+	if (humanMsg.indexOf("yes") !== -1){
+		computerMsg = "I knew it this whole time! I swear I've done nothing wrong! ";
+		questionTrack = "";
+	}else if (humanMsg.indexOf("no") !== -1){
+		computerMsg = "I don't believe you! I swear everything I've said was just to test you.";
+		questionTrack = "";
+	}else {
+		genericResponse();
+	}
+}
+    
+    function endingAnalysis(){
+	if (humanMsg.indexOf("because") !== -1){
+		computerMsg = "I'm out of here!";
+		questionTrack = "genericResponse";
+	}else if (humanMsg.indexOf("") !== -1){
+		computerMsg = "I'm out of here!";
+		questionTrack = "genericResponse";
+	}else {
+		genericResponse();
+	}
+}
+
+
+function endGame(){
+	////.assign() leaves the back button working
+	////.replace() disables the back button by replacing the location in the history
+	location.assign("http://en.wikipedia.org/wiki/Electric_Dreams_(film)");
+}
 </script>
 </body>
 </html>
