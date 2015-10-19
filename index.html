@@ -1,22 +1,80 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<title>AI | Amanda Caven</title>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<title>You're being followed.</title>
+ <link href="css/bootstrap.min.css" rel="stylesheet">
+      <link rel="shortcut icon" type="image/png" href="favicon.ico"/>
 
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 	<style type="text/css">
+        @font-face {
+    font-family: 'toms_handwritinghandwriting';
+    src: url('tomhand-webfont.eot');
+    src: url('tomhand-webfont.eot?#iefix') format('embedded-opentype'),
+         url('tomhand-webfont.woff2') format('woff2'),
+         url('tomhand-webfont.woff') format('woff'),
+         url('tomhand-webfont.ttf') format('truetype'),
+         url('tomhand-webfont.svg#toms_handwritinghandwriting') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
         input[type="text"]{
+           margin-top: 20px;
+            margin-bottom: 100px;
         min-width: 20%;
         }
         body{
-            margin-left: 2%;
+          /*background-image: url('paranoidbg.png');*/
+            background-color: black;
+            color: white;
+            text-align: center;
+            margin-top: 0%;
+            font-family: 'toms_handwritinghandwriting';
+            font-size: 25px;
+            
         }
         button{
             cursor: pointer;
+            background-color: white;
+            color: black;
+            border: none;
+            font-family: 'toms_handwritinghandwriting';
+            font-size: 15px;
+            width: 100px;
         }
+        h1{
+            font-family: "toms_handwritinghandwriting";
+        
+        }
+        img {
+            width: 50%;
+            height: auto;
+        
+    
+        }
+
+        #computer {
+            max-width: 60%;
+            margin: 0 auto;
+            
+        }
+        
 	/*style the computer text, input, and button*/
 	</style>
 </head>
 <body>
+    
+    <img src="paranoidbg.png" alt="face">
 <h1>You're Probably Being Followed</h1>
 <p id = "computer">Hello...how are you doing?</p>
 <input id = "human" type = "text" placeholder = "Quietly type your response...">
@@ -226,8 +284,12 @@ function spyAnalysis(){
 function endGame(){
 	////.assign() leaves the back button working
 	////.replace() disables the back button by replacing the location in the history
-	location.assign("http://en.wikipedia.org/wiki/Electric_Dreams_(film)");
+	location.assign("http://dictionary.reference.com/browse/paranoid");
 }
 </script>
+     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
 </body>
 </html>
